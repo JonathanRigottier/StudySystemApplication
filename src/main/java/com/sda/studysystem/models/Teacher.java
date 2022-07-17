@@ -23,7 +23,7 @@ public class Teacher {
     private String address;
     private String phone;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.MERGE)
     private School school;
 
     @OneToMany
