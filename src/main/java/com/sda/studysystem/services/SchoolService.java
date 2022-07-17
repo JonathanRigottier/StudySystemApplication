@@ -1,0 +1,49 @@
+package com.sda.studysystem.services;
+
+import com.sda.studysystem.models.School;
+
+import java.util.List;
+
+/**
+ * To handle school related operations
+ *
+ * @author Vinod John
+ */
+public interface SchoolService {
+    /**
+     * To create a new school
+     * @param school School
+     */
+    void createSchool(School school);
+
+    /**
+     * To find a school by its ID
+     * @param id id of the school
+     * @return School
+     */
+    School findSchoolById(Long id);
+
+    /**
+     * To find all schools
+     * @return List of schools
+     */
+    List<School> findAllSchools();
+
+    /**
+     * To update an existing school
+     * @param school School
+     */
+    void updateSchool(School school);
+
+    /**
+     * To delete school by its ID
+     * @param id id of the school
+     */
+    void deleteSchoolById(Long id);
+
+    /**
+     * To restore a school by its ID
+     * @param id
+    */
+    void restoreSchoolById(Long id);
+}
