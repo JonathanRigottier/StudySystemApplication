@@ -8,30 +8,53 @@
 </head>
 <body>
 <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg bg-dark">
+    <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Study system</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">School</a>
+                        <a class="nav-link" href="/school">School</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Course</a>
+                        <a class="nav-link active" ria-current="page" href="/course">Course</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled">Teacher</a>
+                        <a class="nav-link" href="/teacher">Teacher</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <div class="container py-4">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Update course</h1>
+                <form action="#" method="post" th:action="@{/course/update}" th:object="${course}">
+                    <div class="form-group mb-3">
+                        <label for="name">Course name</label>
+                        <input class="form-control" id="name" th:field="*{name}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="durationHours">Duration in hours</label>
+                        <input class="form-control" id="durationHours" th:field="*{durationHours}" type="text" required>
+                    </div>
+                    <input id="id" th:field="*{id}" type="hidden">
+                    <input id="active" th:field="*{active}" type="hidden">
+                    <a class="btn btn-light mb-3" type="button" href="/course">Cancel</a>
+                    <button class="btn btn-outline-primary mb-3" type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"

@@ -8,10 +8,11 @@
 </head>
 <body>
 <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg bg-dark">
+    <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Study system</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -20,13 +21,13 @@
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" ria-current="page" href="/school">School</a>
+                        <a class="nav-link" href="/school">School</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Course</a>
+                        <a class="nav-link" href="/course">Course</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled">Teacher</a>
+                        <a class="nav-link active" ria-current="page" href="/teacher">Teacher</a>
                     </li>
                 </ul>
             </div>
@@ -37,7 +38,49 @@
         <div class="p-5 mb-4 bg-light rounded-3">
             <div class="container-fluid py-5">
                 <h1 class="display-5 fw-bold">Teacher list</h1>
+                <a class="btn btn-warning" href="/teacher/create" role="button">Add teacher</a>
+                <p></p>
+                <div class="alert alert-success" role="alert" th:if="${messageType} == 'success'">
+                    <span th:text="${message}"></span>
+                </div>
+                <div class="alert alert-danger" role="alert" th:if="${messageType} == 'error'">
+                    <span th:text="${message}"></span>
+                </div>
+                <div class="alert alert-info" role="alert" th:if="${teachers.size() == 0}">
+                    <span>No teachers found!</span>
+                </div>
 
+                <table class="table table-dark" th:if="${teachers.size() > 0}">
+                    <thead>
+                    <th scope="col">#</th>
+                    <th scope="col">Firstname</th>
+                    <th scope="col">Lastname</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Actions</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="teacher: ${teachers}">
+                        <th scope="row" th:text="${teacher.id}"></th>
+                        <td th:text="${teacher.firstName}"></td>
+                        <td th:text="${teacher.lastName}"></td>
+                        <td th:text="${teacher.address}"></td>
+                        <td th:text="${teacher.phone}"></td>
+                        <td>
+                            <a class="btn btn-primary" role="button" th:href="@{/teacher/update/{id}(id=${teacher.id})}"
+                               th:if="${teacher.isActive()}">
+                                Update
+                            </a>
+                            <a class="btn btn-danger" role="button" th:if="${teacher.isActive()}">
+                                Delete
+                            </a>
+                            <a class="btn btn-success" role="button" th:if="${!teacher.isActive()}">
+                                Restore
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -8,10 +8,11 @@
 </head>
 <body>
 <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg bg-dark">
+    <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Study system</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -20,18 +21,51 @@
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" ria-current="page" href="/school">School</a>
+                        <a class="nav-link" href="/school">School</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Course</a>
+                        <a class="nav-link" href="/course">Course</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled">Teacher</a>
+                        <a class="nav-link active" ria-current="page" href="/teacher">Teacher</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+
+    <div class="container py-4">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Create Teacher</h1>
+                <div class="alert alert-danger" role="alert" th:if="${messageType} == 'error'">
+                    <span th:text="${message}"></span>
+                </div>
+
+                <form action="#" method="post" th:action="@{/teacher}" th:object="${teacher}">
+                    <div class="form-group mb-3">
+                        <label for="firstname">Teacher firstname</label>
+                        <input class="form-control" id="firstName" th:field="*{firstName}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="lastName">Teacher lastname</label>
+                        <input class="form-control" id="lastName" th:field="*{lastName}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="address">Address</label>
+                        <input class="form-control" id="address" th:field="*{address}" type="text" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="phone">Phone</label>
+                        <input class="form-control" id="phone" th:field="*{phone}" type="text" required>
+                    </div>
+                    <a class="btn btn-light mb-3" type="button" href="/school">Cancel</a>
+                    <button class="btn btn-outline-primary mb-3" type="submit">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"
