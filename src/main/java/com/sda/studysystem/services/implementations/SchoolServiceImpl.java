@@ -40,6 +40,16 @@ public class SchoolServiceImpl implements SchoolService {
     }
 
     @Override
+    public School findSchoolByName(String name) throws SchoolNotFoundException {
+        Optional<School> optionalSchool = schoolRepository.findByName(name);
+
+        if(optionalSchool.isEmpty()) {
+            throw new SchoolNotFoundException(name);
+        }
+        return optionalSchool.get();
+    }
+
+    @Override
     public List<School> findAllSchools() {
         return schoolRepository.findAll();
     }

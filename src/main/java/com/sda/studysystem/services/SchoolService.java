@@ -4,6 +4,7 @@ import com.sda.studysystem.exceptions.SchoolNotFoundException;
 import com.sda.studysystem.models.School;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * To handle school related operations
@@ -23,6 +24,13 @@ public interface SchoolService {
      * @return School
      */
     School findSchoolById(Long id) throws SchoolNotFoundException;
+
+    /**
+     * To find a school by its ID
+     * @param name name of the school
+     * @return School
+     */
+    School findSchoolByName(String name) throws SchoolNotFoundException;
 
     /**
      * To find all schools

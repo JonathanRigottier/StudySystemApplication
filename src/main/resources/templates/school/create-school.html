@@ -34,6 +34,34 @@
             </div>
         </div>
     </nav>
+
+    <div class="container py-4">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="container-fluid py-5">
+                <h1 class="display-5 fw-bold">Create school</h1>
+
+                <div class="alert alert-danger" role="alert" th:if="${messageType} == 'error'">
+                    <span th:text="${message}"></span>
+                </div>
+
+                <form action="#" method="post" th:action="@{/school}" th:object="${school}">
+                    <div class="form-group">
+                        <label for="name">School name</label>
+                        <input class="form-control" id="name" th:field="*{name}" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City name</label>
+                        <input class="form-control" id="city" th:field="*{city}" type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input class="form-control" id="phone" th:field="*{phone}" type="text" required>
+                    </div>
+                    <button class="btn btn-outline-primary" type="submit">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
 

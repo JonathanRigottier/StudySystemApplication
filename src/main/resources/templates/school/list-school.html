@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg bg-dark">
+        <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Study system</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,6 +34,50 @@
                 </div>
             </div>
         </nav>
+        <div class="container py-4">
+            <div class="p-5 mb-4 bg-light rounded-3">
+                <div class="container-fluid py-5">
+                    <h1 class="display-5 fw-bold">School list</h1>
+                    <a class="btn btn-warning" href="/school/create" role="button">Add school</a>
+                    <div class="alert alert-success" role="alert" th:if="${messageType} == 'success'">
+                        <span th:text="${message}"></span>
+                    </div>
+                    <div class="alert alert-info" role="alert" th:if="${schools.size() == 0}">
+                        <span>No School found!</span>
+                    </div>
+
+                    <table class="table table-dark" th:if="${schools.size() > 0}">
+                        <thead>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">City</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Actions</th>
+                        </thead>
+                        <tbody>
+                            <tr th:each="school: ${schools}">
+                                <th scope="row" th:text="${school.id}"></th>
+                                <td th:text="${school.name}"></td>
+                                <td th:text="${school.city}"></td>
+                                <td th:text="${school.phone}"></td>
+                                <td>
+                                    <a class="btn btn-primary" role="button" th:if="${school.isActive()}">
+                                        Update
+                                    </a>
+                                    <a class="btn btn-danger" role="button" th:if="${school.isActive()}">
+                                        Delete
+                                    </a>
+                                    <a class="btn btn-success" role="button" th:if="${!school.isActive()}">
+                                        Restore
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.js"

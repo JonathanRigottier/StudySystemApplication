@@ -26,7 +26,7 @@ public class Teacher {
     @OneToOne(cascade = CascadeType.MERGE)
     private School school;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Course> courses;
 
     private boolean isActive;
