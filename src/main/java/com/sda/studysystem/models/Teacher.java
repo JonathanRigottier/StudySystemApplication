@@ -11,8 +11,8 @@ import java.util.List;
  *
  * @author Vinod John
  */
-@Data
 @Entity
+@Data
 public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

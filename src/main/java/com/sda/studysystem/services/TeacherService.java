@@ -1,6 +1,8 @@
 package com.sda.studysystem.services;
 
+import com.sda.studysystem.exceptions.SchoolNotFoundException;
 import com.sda.studysystem.exceptions.TeacherNotFoundException;
+import com.sda.studysystem.models.School;
 import com.sda.studysystem.models.Teacher;
 
 import java.util.List;
@@ -23,6 +25,13 @@ public interface TeacherService {
      * @return Teacher
      */
     Teacher findTeacherById(Long id) throws TeacherNotFoundException;
+
+    /**
+     * To find a teacher by its name
+     * @param name name of the teacher
+     * @return Teacher
+     */
+    Teacher findTeacherByName(String name) throws TeacherNotFoundException;
 
     /**
      * To find all teachers

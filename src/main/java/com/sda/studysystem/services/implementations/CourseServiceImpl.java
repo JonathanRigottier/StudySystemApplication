@@ -1,7 +1,9 @@
 package com.sda.studysystem.services.implementations;
 
 import com.sda.studysystem.exceptions.CourseNotFoundException;
+import com.sda.studysystem.exceptions.SchoolNotFoundException;
 import com.sda.studysystem.models.Course;
+import com.sda.studysystem.models.School;
 import com.sda.studysystem.repositories.CourseRepository;
 import com.sda.studysystem.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,16 @@ public class CourseServiceImpl implements CourseService {
 
         if(optionalCourse.isEmpty()) {
             throw new CourseNotFoundException(id);
+        }
+        return optionalCourse.get();
+    }
+
+    @Override
+    public Course findCourseByName(String name) throws CourseNotFoundException {
+        Optional<Course> optionalCourse = courseRepository.findByName(name);
+
+        if(optionalCourse.isEmpty()) {
+            throw new CourseNotFoundException(name);
         }
         return optionalCourse.get();
     }

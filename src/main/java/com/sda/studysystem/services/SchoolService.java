@@ -26,7 +26,7 @@ public interface SchoolService {
     School findSchoolById(Long id) throws SchoolNotFoundException;
 
     /**
-     * To find a school by its ID
+     * To find a school by its name
      * @param name name of the school
      * @return School
      */

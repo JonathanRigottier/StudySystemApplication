@@ -12,8 +12,8 @@ import javax.persistence.Id;
  *
  * @author Vinod John
  */
-@Data
 @Entity
+@Data
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

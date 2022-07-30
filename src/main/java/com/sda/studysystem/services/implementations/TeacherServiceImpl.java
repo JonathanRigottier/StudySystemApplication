@@ -41,6 +41,16 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
+    public Teacher findTeacherByName(String lastName) throws TeacherNotFoundException {
+        Optional<Teacher> optionalTeacher = teacherRepository.findByName(lastName);
+
+        if(optionalTeacher.isEmpty()) {
+            throw new TeacherNotFoundException(lastName);
+        }
+        return optionalTeacher.get();
+    }
+
+    @Override
     public List<Teacher> findAllTeachers() {
         return teacherRepository.findAll();
     }
