@@ -39,9 +39,14 @@
                 <div class="container-fluid py-5">
                     <h1 class="display-5 fw-bold">School list</h1>
                     <a class="btn btn-warning" href="/school/create" role="button">Add school</a>
-                    <div class="alert alert-success" role="alert" th:if="${messageType} == 'success'">
+                    <p></p>
+                    <div class="alert alert-success" role="alert" th:if="${messageType} == 'sucess'">
                         <span th:text="${message}"></span>
                     </div>
+                    <div class="alert alert-danger" role="alert" th:if="${messageType} == 'error'">
+                        <span th:text="${message}"></span>
+                    </div>
+
                     <div class="alert alert-info" role="alert" th:if="${schools.size() == 0}">
                         <span>No School found!</span>
                     </div>
@@ -61,7 +66,8 @@
                                 <td th:text="${school.city}"></td>
                                 <td th:text="${school.phone}"></td>
                                 <td>
-                                    <a class="btn btn-primary" role="button" th:if="${school.isActive()}">
+                                    <a class="btn btn-primary" role="button" th:href="@{/school/update/{id}(id=${school.id})}"
+                                     th:if="${school.isActive()}">
                                         Update
                                     </a>
                                     <a class="btn btn-danger" role="button" th:if="${school.isActive()}">

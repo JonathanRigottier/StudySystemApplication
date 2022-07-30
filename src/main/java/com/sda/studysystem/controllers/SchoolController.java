@@ -6,10 +6,7 @@ import com.sda.studysystem.services.SchoolService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -50,6 +47,37 @@ public class SchoolController {
             redirectAttributes.addFlashAttribute("message",
                     String.format("School(%s) created successfully!", school.getName()));
             redirectAttributes.addFlashAttribute("messageType","success");
+            return "redirect:/school";
+        }
+    }
+
+    @GetMapping("/update/{id}")
+    public String showUpdateSchoolPage(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes,
+                                       @RequestParam(value="school", required = false) School school) {
+        if (school == null) {
+            try {
+                model.addAttribute("school", schoolService.findSchoolById(id));
+            } catch (SchoolNotFoundException e) {
+                redirectAttributes.addFlashAttribute("message",
+                        String.format("School(id=%d) not found!", id));
+                redirectAttributes.addFlashAttribute("messageType", "error");
+                return "redirect:/school";
+            }
+        }
+        return "school/update-school";
+    }
+    @PostMapping("/update")
+    public String updateSchool(School school, RedirectAttributes redirectAttributes) {
+        try {
+            schoolService.updateSchool(school);
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("School(id=%d) created successfully!", school.getId()));
+            redirectAttributes.addFlashAttribute("messageType","success");
+            return "redirect:/school";
+        } catch (SchoolNotFoundException e) {
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("School(id=%d) not found!", school.getId()));
+            redirectAttributes.addFlashAttribute("messageType","error");
             return "redirect:/school";
         }
     }
