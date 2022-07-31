@@ -41,11 +41,11 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher findTeacherByName(String firstName) throws TeacherNotFoundException {
-        Optional<Teacher> optionalTeacher = teacherRepository.findByFirstName(firstName);
+    public Teacher findTeacherByEmail(String email) throws TeacherNotFoundException {
+        Optional<Teacher> optionalTeacher = teacherRepository.findByEmail(email);
 
         if(optionalTeacher.isEmpty()) {
-            throw new TeacherNotFoundException(firstName);
+            throw new TeacherNotFoundException(email);
         }
         return optionalTeacher.get();
     }

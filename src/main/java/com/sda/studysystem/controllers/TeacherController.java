@@ -39,15 +39,15 @@ public class TeacherController {
     @PostMapping
     public String createTeacher(Teacher teacher, RedirectAttributes redirectAttributes) {
         try {
-            Teacher searchTeacher = teacherService.findTeacherByName(teacher.getFirstName());
+            Teacher searchTeacher = teacherService.findTeacherByEmail(teacher.getEmail());
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Teacher(%s) already exists!", searchTeacher.getFirstName()));
+                    String.format("Teacher(%s) already exists!", searchTeacher.getEmail()));
             redirectAttributes.addFlashAttribute("messageType","error");
             return "redirect:/teacher/create";
         } catch (TeacherNotFoundException e) {
             teacherService.createTeacher(teacher);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Teacher(%s) created successfully!", teacher.getFirstName()));
+                    String.format("Teacher(%s) created successfully!", teacher.getEmail()));
             redirectAttributes.addFlashAttribute("messageType","success");
             return "redirect:/teacher";
         }

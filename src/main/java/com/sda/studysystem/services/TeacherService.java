@@ -28,10 +28,10 @@ public interface TeacherService {
 
     /**
      * To find a teacher by its name
-     * @param firstName firstname of the teacher
+     * @param email firstname of the teacher
      * @return Teacher
      */
-    Teacher findTeacherByName(String firstName) throws TeacherNotFoundException;
+    Teacher findTeacherByEmail(String email) throws TeacherNotFoundException;
 
     /**
      * To find all teachers

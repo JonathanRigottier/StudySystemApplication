@@ -21,6 +21,7 @@ public class Teacher {
     private String firstName;
     private String lastName;
     private String address;
+    private String email;
     private String phone;
 
     @OneToOne(cascade = CascadeType.MERGE)

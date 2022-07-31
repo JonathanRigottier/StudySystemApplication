@@ -33,6 +33,7 @@
                     <th scope="col">Firstname</th>
                     <th scope="col">Lastname</th>
                     <th scope="col">Address</th>
+                    <th scope="col">Email</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Actions</th>
                     </thead>
@@ -42,6 +43,7 @@
                         <td th:text="${teacher.firstName}"></td>
                         <td th:text="${teacher.lastName}"></td>
                         <td th:text="${teacher.address}"></td>
+                        <td th:text="${teacher.email}"></td>
                         <td th:text="${teacher.phone}"></td>
                         <td>
                             <a class="btn btn-primary" role="button" th:href="@{/teacher/update/{id}(id=${teacher.id})}"

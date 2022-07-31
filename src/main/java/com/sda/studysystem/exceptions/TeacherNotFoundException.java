@@ -11,7 +11,7 @@ public class TeacherNotFoundException extends Exception{
         super(String.format("Teacher not found for id: %d", id));
     }
 
-    public TeacherNotFoundException(String firstName) {
-        super(String.format("Teacher not found for firstname: %s", firstName));
+    public TeacherNotFoundException(String email) {
+        super(String.format("Teacher not found for firstname: %s", email));
     }
 }
