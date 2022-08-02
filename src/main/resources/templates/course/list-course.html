@@ -36,7 +36,11 @@
                     </thead>
                     <tbody>
                     <tr th:each="course: ${courses}">
-                        <th scope="row" th:text="${course.id}"></th>
+                        <th scope="row">
+                            <a href="#" class="text-decoration-none" th:href="@{/course/{id}(id=${course.id})}">
+                                <span class="d-inline-block text-truncate" style="max-width: 70px;" th:text="${course.id}"></span>
+                            </a>
+                        </th>
                         <td th:text="${course.name}"></td>
                         <td th:text="${course.durationHours}"></td>
                         <td>
@@ -44,10 +48,12 @@
                                th:if="${course.isActive()}">
                                 Update
                             </a>
-                            <a class="btn btn-danger" role="button" th:if="${course.isActive()}">
+                            <a class="btn btn-danger" role="button" th:href="@{/course/delete/{id}(id=${course.id})}"
+                               th:if="${course.isActive()}">
                                 Delete
                             </a>
-                            <a class="btn btn-success" role="button" th:if="${!course.isActive()}">
+                            <a class="btn btn-success" role="button" th:href="@{/course/restore/{id}(id=${course.id})}"
+                               th:if="${!course.isActive()}">
                                 Restore
                             </a>
                         </td>

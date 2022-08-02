@@ -32,28 +32,30 @@
                     <th scope="col">#</th>
                     <th scope="col">Firstname</th>
                     <th scope="col">Lastname</th>
-                    <th scope="col">Address</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Phone</th>
                     <th scope="col">Actions</th>
                     </thead>
                     <tbody>
                     <tr th:each="teacher: ${teachers}">
-                        <th scope="row" th:text="${teacher.id}"></th>
+                        <th scope="row">
+                            <a href="#" class="text-decoration-none" th:href="@{/teacher/{id}(id=${teacher.id})}">
+                                <span class="d-inline-block text-truncate" style="max-width: 70px;" th:text="${teacher.id}"></span>
+                            </a>
+                        </th>
                         <td th:text="${teacher.firstName}"></td>
                         <td th:text="${teacher.lastName}"></td>
-                        <td th:text="${teacher.address}"></td>
                         <td th:text="${teacher.email}"></td>
-                        <td th:text="${teacher.phone}"></td>
                         <td>
                             <a class="btn btn-primary" role="button" th:href="@{/teacher/update/{id}(id=${teacher.id})}"
                                th:if="${teacher.isActive()}">
                                 Update
                             </a>
-                            <a class="btn btn-danger" role="button" th:if="${teacher.isActive()}">
+                            <a class="btn btn-danger" role="button" th:href="@{/teacher/delete/{id}(id=${teacher.id})}"
+                               th:if="${teacher.isActive()}">
                                 Delete
                             </a>
-                            <a class="btn btn-success" role="button" th:if="${!teacher.isActive()}">
+                            <a class="btn btn-success" role="button" th:href="@{/teacher/restore/{id}(id=${teacher.id})}"
+                               th:if="${!teacher.isActive()}">
                                 Restore
                             </a>
                         </td>

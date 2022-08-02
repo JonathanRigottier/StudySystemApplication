@@ -2,6 +2,7 @@ package com.sda.studysystem.controllers;
 
 import com.sda.studysystem.exceptions.CourseNotFoundException;
 import com.sda.studysystem.exceptions.SchoolNotFoundException;
+import com.sda.studysystem.exceptions.TeacherNotFoundException;
 import com.sda.studysystem.models.Course;
 import com.sda.studysystem.models.School;
 import com.sda.studysystem.services.CourseService;
@@ -27,6 +28,16 @@ public class CourseController {
                                      @ModelAttribute("messageType") String messageType) {
         model.addAttribute("courses",courseService.findAllCourses());
         return "course/list-course";
+    }
+
+    @GetMapping("/{id}")
+    public String showCourseViewPage(@PathVariable Long id ,Model model, RedirectAttributes redirectAttributes) {
+        try {
+            model.addAttribute("course", courseService.findCourseById(id));
+        return "course/view-course";
+    } catch (CourseNotFoundException e) {
+            return handleCourseNotFoundExceptionById(id, redirectAttributes);
+        }
     }
 
     @GetMapping("/create")
@@ -60,10 +71,7 @@ public class CourseController {
             try {
                 model.addAttribute("course", courseService.findCourseById(id));
             } catch (CourseNotFoundException e) {
-                redirectAttributes.addFlashAttribute("message",
-                        String.format("Course(id=%d) not found!", id));
-                redirectAttributes.addFlashAttribute("messageType", "error");
-                return "redirect:/course";
+                return handleCourseNotFoundExceptionById(id, redirectAttributes);
             }
         }
         return "course/update-course";
@@ -77,10 +85,43 @@ public class CourseController {
             redirectAttributes.addFlashAttribute("messageType","success");
             return "redirect:/course";
         } catch (CourseNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message",
-                    String.format("Course(id=%d) not found!", course.getId()));
-            redirectAttributes.addFlashAttribute("messageType","error");
-            return "redirect:/course";
+            return handleCourseNotFoundExceptionById(course.getId(), redirectAttributes);
         }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteCourse(@PathVariable long id, RedirectAttributes redirectAttributes) {
+        try {
+            courseService.deleteCourseById(id);
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Course(id=%d) deleted successfully!", id));
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/course";
+
+        } catch (CourseNotFoundException e) {
+            return handleCourseNotFoundExceptionById(id, redirectAttributes);
+        }
+    }
+
+    @GetMapping("/restore/{id}")
+    public String restoreCourse (@PathVariable long id, RedirectAttributes redirectAttributes) {
+        try {
+            courseService.restoreCourseById(id);
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Course(id=%d) restored successfully!", id));
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/course";
+
+        } catch (CourseNotFoundException e) {
+            return handleCourseNotFoundExceptionById(id, redirectAttributes);
+        }
+    }
+
+    // PRIVATE METHODS //
+    private String handleCourseNotFoundExceptionById(long id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message",
+                String.format("Course(id=%d) not found!", id));
+        redirectAttributes.addFlashAttribute("messageType", "error");
+        return "redirect:/course";
     }
 }

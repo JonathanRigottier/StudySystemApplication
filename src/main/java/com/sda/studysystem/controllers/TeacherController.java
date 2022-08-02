@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.UUID;
+
 /**
  * Controller to handle teacher related request
  *
@@ -27,6 +29,16 @@ public class TeacherController {
                                      @ModelAttribute("messageType") String messageType) {
         model.addAttribute("teachers",teacherService.findAllTeachers());
         return "teacher/list-teacher";
+    }
+
+    @GetMapping("/{id}")
+    public String showTeacherViewPage(@PathVariable Long id ,Model model, RedirectAttributes redirectAttributes) {
+        try {
+            model.addAttribute("teacher", teacherService.findTeacherById(id));
+            return "teacher/view-teacher";
+        } catch (TeacherNotFoundException e) {
+            return handleTeacherNotFoundExceptionById(id, redirectAttributes);
+        }
     }
 
     @GetMapping("/create")
@@ -60,10 +72,7 @@ public class TeacherController {
             try {
                 model.addAttribute("teacher", teacherService.findTeacherById(id));
             } catch (TeacherNotFoundException e) {
-                redirectAttributes.addFlashAttribute("message",
-                        String.format("Teacher(id=%d) not found!", id));
-                redirectAttributes.addFlashAttribute("messageType", "error");
-                return "redirect:/teacher";
+                return handleTeacherNotFoundExceptionById(id, redirectAttributes);
             }
         }
         return "teacher/update-teacher";
@@ -77,11 +86,44 @@ public class TeacherController {
             redirectAttributes.addFlashAttribute("messageType","success");
             return "redirect:/teacher";
         } catch (TeacherNotFoundException e) {
-            redirectAttributes.addFlashAttribute("message",
-                    String.format("Teacher(id=%d) not found!", teacher.getId()));
-            redirectAttributes.addFlashAttribute("messageType","error");
-            return "redirect:/teacher";
+            return handleTeacherNotFoundExceptionById(teacher.getId(), redirectAttributes);
         }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteTeacher(@PathVariable long id, RedirectAttributes redirectAttributes) {
+        try {
+            teacherService.deleteTeacherById(id);
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Teacher(id=%d) deleted successfully!", id));
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/teacher";
+
+        } catch (TeacherNotFoundException e) {
+            return handleTeacherNotFoundExceptionById(id, redirectAttributes);
+        }
+    }
+
+    @GetMapping("/restore/{id}")
+    public String restoreTeacher(@PathVariable long id, RedirectAttributes redirectAttributes) {
+        try {
+            teacherService.restoreTeacherById(id);
+            redirectAttributes.addFlashAttribute("message",
+                    String.format("Teacher(id=%d) restored successfully!", id));
+            redirectAttributes.addFlashAttribute("messageType", "success");
+            return "redirect:/teacher";
+
+        } catch (TeacherNotFoundException e) {
+            return handleTeacherNotFoundExceptionById(id, redirectAttributes);
+        }
+    }
+
+    // PRIVATE METHODS //
+    private String handleTeacherNotFoundExceptionById(long id, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("message",
+                String.format("Teacher(id=%d) not found!", id));
+        redirectAttributes.addFlashAttribute("messageType", "error");
+        return "redirect:/teacher";
     }
 
 }
