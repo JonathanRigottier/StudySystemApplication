@@ -6,6 +6,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
           crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 </head>
 <body>
 <div class="container-fluid">
@@ -15,7 +16,7 @@
         <div class="p-5 mb-4 bg-light rounded-3">
             <div class="container-fluid py-5">
                 <h1 class="display-5 fw-bold">Teacher list</h1>
-                <a class="btn btn-warning" href="/teacher/create" role="button">Add teacher</a>
+                <a class="btn btn-success" href="/teacher/create" role="button">Add teacher</a>
                 <p></p>
                 <div class="alert alert-success" role="alert" th:if="${messageType} == 'success'">
                     <span th:text="${message}"></span>
@@ -46,17 +47,17 @@
                         <td th:text="${teacher.lastName}"></td>
                         <td th:text="${teacher.email}"></td>
                         <td>
-                            <a class="btn btn-primary" role="button" th:href="@{/teacher/update/{id}(id=${teacher.id})}"
+                            <a class="btn btn-primary" style="margin-right:15px;" role="button" th:href="@{/teacher/update/{id}(id=${teacher.id})}"
                                th:if="${teacher.isActive()}">
-                                Update
+                                <i class="bi bi-pencil-fill"></i>
                             </a>
                             <a class="btn btn-danger" role="button" th:href="@{/teacher/delete/{id}(id=${teacher.id})}"
                                th:if="${teacher.isActive()}">
-                                Delete
+                                <i class="bi bi-trash-fill"></i>
                             </a>
-                            <a class="btn btn-success" role="button" th:href="@{/teacher/restore/{id}(id=${teacher.id})}"
+                            <a class="btn btn-warning" role="button" th:href="@{/teacher/restore/{id}(id=${teacher.id})}"
                                th:if="${!teacher.isActive()}">
-                                Restore
+                                <i class="bi bi-arrow-counterclockwise"></i>
                             </a>
                         </td>
                     </tr>
