@@ -1,5 +1,7 @@
 package com.sda.studysystem.exceptions;
 
+import java.util.UUID;
+
 /**
  * Exception for the course not found by ID
  *
@@ -7,8 +9,8 @@ package com.sda.studysystem.exceptions;
  */
 public class CourseNotFoundException extends Exception {
     private static final long serialVersionUID = 1L;
-    public CourseNotFoundException(Long id) {
-        super(String.format("Course not found for id: %d", id));
+    public CourseNotFoundException(UUID id) {
+        super(String.format("Course not found for id: %s", id));
     }
 
     public CourseNotFoundException(String name) {

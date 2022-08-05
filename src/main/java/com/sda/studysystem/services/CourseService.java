@@ -6,6 +6,7 @@ import com.sda.studysystem.models.Course;
 import com.sda.studysystem.models.School;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * To handle school related operations
@@ -25,7 +26,7 @@ public interface CourseService {
      * @param id id of the course
      * @return Course
      */
-    Course findCourseById(Long id) throws CourseNotFoundException;
+    Course findCourseById(UUID id) throws CourseNotFoundException;
 
     /**
      * To find a course by its name
@@ -50,11 +51,11 @@ public interface CourseService {
      * To delete course by its ID
      * @param id id of the course
      */
-    void deleteCourseById(Long id) throws CourseNotFoundException;
+    void deleteCourseById(UUID id) throws CourseNotFoundException;
 
     /**
      * To restore a course by its ID
      * @param id
      */
-    void restoreCourseById(Long id) throws CourseNotFoundException;
+    void restoreCourseById(UUID id) throws CourseNotFoundException;
 }

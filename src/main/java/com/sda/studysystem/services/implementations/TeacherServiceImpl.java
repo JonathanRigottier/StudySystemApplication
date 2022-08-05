@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Implementation of Course Service
@@ -31,7 +32,7 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public Teacher findTeacherById(Long id) throws TeacherNotFoundException {
+    public Teacher findTeacherById(UUID id) throws TeacherNotFoundException {
         Optional<Teacher> optionalTeacher = teacherRepository.findById(id);
 
         if(optionalTeacher.isEmpty()) {
@@ -63,14 +64,14 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void deleteTeacherById(Long id) throws TeacherNotFoundException {
+    public void deleteTeacherById(UUID id) throws TeacherNotFoundException {
         Teacher teacher = findTeacherById(id);
         teacher.setActive(false);
         teacherRepository.saveAndFlush(teacher);
     }
 
     @Override
-    public void restoreTeacherById(Long id) throws TeacherNotFoundException {
+    public void restoreTeacherById(UUID id) throws TeacherNotFoundException {
         Teacher teacher = findTeacherById(id);
         teacher.setActive(true);
         teacherRepository.saveAndFlush(teacher);

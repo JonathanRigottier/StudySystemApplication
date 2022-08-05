@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.UUID;
+
 /**
  * Controller to handle course related request
  *
@@ -31,7 +33,7 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public String showCourseViewPage(@PathVariable Long id ,Model model, RedirectAttributes redirectAttributes) {
+    public String showCourseViewPage(@PathVariable UUID id, Model model, RedirectAttributes redirectAttributes) {
         try {
             model.addAttribute("course", courseService.findCourseById(id));
         return "course/view-course";
@@ -65,7 +67,7 @@ public class CourseController {
     }
 
     @GetMapping("/update/{id}")
-    public String showUpdateCoursePage(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes,
+    public String showUpdateCoursePage(@PathVariable UUID id, Model model, RedirectAttributes redirectAttributes,
                                        @RequestParam(value="course", required = false) Course course) {
         if (course == null) {
             try {
@@ -81,7 +83,7 @@ public class CourseController {
         try {
             courseService.updateCourse(course);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Course(id=%d) created successfully!", course.getId()));
+                    String.format("Course(id=%s) created successfully!", course.getId()));
             redirectAttributes.addFlashAttribute("messageType","success");
             return "redirect:/course";
         } catch (CourseNotFoundException e) {
@@ -90,11 +92,11 @@ public class CourseController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteCourse(@PathVariable long id, RedirectAttributes redirectAttributes) {
+    public String deleteCourse(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             courseService.deleteCourseById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Course(id=%d) deleted successfully!", id));
+                    String.format("Course(id=%s) deleted successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/course";
 
@@ -104,11 +106,11 @@ public class CourseController {
     }
 
     @GetMapping("/restore/{id}")
-    public String restoreCourse (@PathVariable long id, RedirectAttributes redirectAttributes) {
+    public String restoreCourse (@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         try {
             courseService.restoreCourseById(id);
             redirectAttributes.addFlashAttribute("message",
-                    String.format("Course(id=%d) restored successfully!", id));
+                    String.format("Course(id=%s) restored successfully!", id));
             redirectAttributes.addFlashAttribute("messageType", "success");
             return "redirect:/course";
 
@@ -118,9 +120,9 @@ public class CourseController {
     }
 
     // PRIVATE METHODS //
-    private String handleCourseNotFoundExceptionById(long id, RedirectAttributes redirectAttributes) {
+    private String handleCourseNotFoundExceptionById(UUID id, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("message",
-                String.format("Course(id=%d) not found!", id));
+                String.format("Course(id=%s) not found!", id));
         redirectAttributes.addFlashAttribute("messageType", "error");
         return "redirect:/course";
     }

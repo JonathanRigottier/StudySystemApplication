@@ -6,6 +6,7 @@ import com.sda.studysystem.models.School;
 import com.sda.studysystem.models.Teacher;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * To handle teacher related operations
@@ -24,7 +25,7 @@ public interface TeacherService {
      * @param id id of the teacher
      * @return Teacher
      */
-    Teacher findTeacherById(Long id) throws TeacherNotFoundException;
+    Teacher findTeacherById(UUID id) throws TeacherNotFoundException;
 
     /**
      * To find a teacher by its name
@@ -49,11 +50,11 @@ public interface TeacherService {
      * To delete teacher by its ID
      * @param id id of the teacher
      */
-    void deleteTeacherById(Long id) throws TeacherNotFoundException;
+    void deleteTeacherById(UUID id) throws TeacherNotFoundException;
 
     /**
      * To restore a teacher by its ID
      * @param id
      */
-    void restoreTeacherById(Long id) throws TeacherNotFoundException;
+    void restoreTeacherById(UUID id) throws TeacherNotFoundException;
 }
