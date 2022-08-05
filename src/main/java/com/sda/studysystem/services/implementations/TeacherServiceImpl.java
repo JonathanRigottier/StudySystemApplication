@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 
 /**
  * Implementation of Course Service
@@ -28,6 +30,8 @@ public class TeacherServiceImpl implements TeacherService {
     @Override
     public void createTeacher(Teacher teacher) {
         teacher.setActive(true);
+        LocalDate TodayDate = LocalDate.now();
+        teacher.setJoinDate(TodayDate);
         teacherRepository.save(teacher);
     }
 
