@@ -7,11 +7,17 @@ import com.sda.studysystem.models.Course;
 import com.sda.studysystem.models.School;
 import com.sda.studysystem.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -19,28 +25,26 @@ import java.util.UUID;
  *
  * @author Rigottier Jonathan
  */
-@Controller
+@RestController
 @RequestMapping("/course")
 public class CourseController {
     @Autowired
     private CourseService courseService;
 
     @GetMapping
-    public String showCourseListPage(Model model, @ModelAttribute("message") String message,
-                                     @ModelAttribute("messageType") String messageType) {
-        model.addAttribute("courses",courseService.findAllCourses());
-        return "course/list-course";
+    public List<Course> findAllCourses() {
+        return courseService.findAllCourses();
     }
 
     @GetMapping("/{id}")
-    public String showCourseViewPage(@PathVariable UUID id, Model model, RedirectAttributes redirectAttributes) {
-        try {
-            model.addAttribute("course", courseService.findCourseById(id));
-        return "course/view-course";
-    } catch (CourseNotFoundException e) {
-            return handleCourseNotFoundExceptionById(id, redirectAttributes);
+    public ResponseEntity<?> findCourseById(@PathVariable UUID id) throws CourseNotFoundException {
+        Course course = courseService.findCourseById(id);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setDate(new Date().toInstant());
+            return new ResponseEntity<>(course, headers, HttpStatus.OK);
         }
-    }
 
     @GetMapping("/create")
     public String showCreateCoursePage(@ModelAttribute("course") Course course,

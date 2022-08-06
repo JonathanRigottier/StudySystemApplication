@@ -1,5 +1,6 @@
 package com.sda.studysystem.services;
 
+import com.sda.studysystem.exceptions.SchoolAlreadyExistsException;
 import com.sda.studysystem.exceptions.SchoolNotFoundException;
 import com.sda.studysystem.models.School;
 
@@ -17,7 +18,7 @@ public interface SchoolService {
      *
      * @param school School
      */
-    void createSchool(School school);
+    void createSchool(School school) throws SchoolAlreadyExistsException;
 
     /**
      * To find a school by its ID

@@ -6,11 +6,17 @@ import com.sda.studysystem.models.School;
 import com.sda.studysystem.models.Teacher;
 import com.sda.studysystem.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -18,28 +24,28 @@ import java.util.UUID;
  *
  * @author Rigottier Jonathan
  */
-@Controller
+@RestController
 @RequestMapping("/teacher")
 public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
     @GetMapping
-    public String showTeacherListPage(Model model, @ModelAttribute("message") String message,
-                                     @ModelAttribute("messageType") String messageType) {
-        model.addAttribute("teachers",teacherService.findAllTeachers());
-        return "teacher/list-teacher";
+    public List<Teacher> findAllTeachers() {
+        return teacherService.findAllTeachers();
     }
 
     @GetMapping("/{id}")
-    public String showTeacherViewPage(@PathVariable UUID id,Model model, RedirectAttributes redirectAttributes) {
-        try {
-            model.addAttribute("teacher", teacherService.findTeacherById(id));
-            return "teacher/view-teacher";
-        } catch (TeacherNotFoundException e) {
-            return handleTeacherNotFoundExceptionById(id, redirectAttributes);
+    public ResponseEntity<?> findTeacherById(@PathVariable UUID id) throws TeacherNotFoundException {
+
+            Teacher teacher = teacherService.findTeacherById(id);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setDate(new Date().toInstant());
+            return new ResponseEntity<>(teacher, headers, HttpStatus.OK);
         }
-    }
+
 
     @GetMapping("/create")
     public String showCreateTeacherPage(@ModelAttribute("teacher") Teacher teacher,
@@ -49,7 +55,7 @@ public class TeacherController {
     }
 
     @PostMapping
-    public String createTeacher(Teacher teacher, RedirectAttributes redirectAttributes) {
+    public String createTeacher(Teacher teacher, RedirectAttributes redirectAttributes) throws TeacherNotFoundException {
         try {
             Teacher searchTeacher = teacherService.findTeacherByEmail(teacher.getEmail());
             redirectAttributes.addFlashAttribute("message",

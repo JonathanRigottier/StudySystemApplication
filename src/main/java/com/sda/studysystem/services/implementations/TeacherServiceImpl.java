@@ -28,11 +28,11 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherRepository teacherRepository;
 
     @Override
-    public void createTeacher(Teacher teacher) {
-        teacher.setActive(true);
-        LocalDate TodayDate = LocalDate.now();
-        teacher.setJoinDate(TodayDate);
-        teacherRepository.save(teacher);
+    public void createTeacher(Teacher teacher) throws TeacherNotFoundException {
+        if(findTeacherByEmail(teacher.getEmail()) == null) {
+            teacher.setActive(true);
+            teacherRepository.save(teacher);
+        }
     }
 
     @Override

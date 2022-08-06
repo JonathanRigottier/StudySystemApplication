@@ -31,8 +31,8 @@ public class DataInit {
     @PostConstruct
     public void init(){
         initSchool();
-        initCourse();
-        initTeacher();
+        //initCourse();
+        //initTeacher();
     }
 
     // PRIVATE METHODS //
@@ -43,14 +43,13 @@ public class DataInit {
         school.setCity("Viljandi");
         school.setPhone("59698963");
         try {
-            School searchSchool = schoolService.findSchoolByName(school.getName());
-            System.out.println("Already created. Cannot pre-initialize school with name : " + searchSchool.getName());
-        } catch (SchoolNotFoundException e) {
             schoolService.createSchool(school);
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
         }
     }
 
-    private void initCourse() {
+    /*private void initCourse() {
         System.out.println("Starting initializing course...");
         Course course = new Course();
         course.setName("Java Spring Boot");
@@ -64,7 +63,9 @@ public class DataInit {
         }
     }
 
-    private void initTeacher() {
+     */
+
+    /*private void initTeacher() throws TeacherNotFoundException {
         System.out.println("Starting initializing teacher...");
         Teacher teacher = new Teacher();
         teacher.setFirstName("Jonathan");
@@ -79,4 +80,6 @@ public class DataInit {
             teacherService.createTeacher(teacher);
         }
     }
+
+     */
 }
