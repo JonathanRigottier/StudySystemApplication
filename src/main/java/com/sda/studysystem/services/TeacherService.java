@@ -18,7 +18,7 @@ public interface TeacherService {
      * To create a new teacher
      * @param teacher Teacher
      */
-    void createTeacher(Teacher teacher) throws TeacherNotFoundException;
+    void createTeacher(Teacher teacher);
 
     /**
      * To find a teacher by its ID

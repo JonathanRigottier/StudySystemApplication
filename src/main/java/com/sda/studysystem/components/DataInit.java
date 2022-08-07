@@ -31,8 +31,8 @@ public class DataInit {
     @PostConstruct
     public void init(){
         initSchool();
-        //initCourse();
-        //initTeacher();
+        initCourse();
+        initTeacher();
     }
 
     // PRIVATE METHODS //
@@ -43,29 +43,27 @@ public class DataInit {
         school.setCity("Viljandi");
         school.setPhone("59698963");
         try {
+            School schoolResult = schoolService.findSchoolByName(school.getName());
+            System.out.printf("School (name=%s) already exists. Cannot create duplicate school!%n", schoolResult.getName());
+        } catch (SchoolNotFoundException e) {
             schoolService.createSchool(school);
-        } catch (Exception e) {
-            System.out.println(e.getLocalizedMessage());
         }
     }
-
-    /*private void initCourse() {
+    private void initCourse() {
         System.out.println("Starting initializing course...");
         Course course = new Course();
         course.setName("Java Spring Boot");
         course.setDurationHours(50.5);
 
         try {
-            Course searchCourse = courseService.findCourseByName(course.getName());
-            System.out.println("Already created. Cannot pre-initialize course's name : " + searchCourse.getName());
+            Course courseResult = courseService.findCourseByName(course.getName());
+            System.out.printf("Course (name=%s) already exists. Cannot create duplicate course!%n", courseResult.getName());
         } catch (CourseNotFoundException e) {
             courseService.createCourse(course);
         }
     }
 
-     */
-
-    /*private void initTeacher() throws TeacherNotFoundException {
+    private void initTeacher() {
         System.out.println("Starting initializing teacher...");
         Teacher teacher = new Teacher();
         teacher.setFirstName("Jonathan");
@@ -73,13 +71,12 @@ public class DataInit {
         teacher.setAddress("A. Weizenbergi 12");
         teacher.setEmail("jonathanrigottier@msn.com");
         teacher.setPhone("51961109");
+
         try {
-            Teacher searchTeacher = teacherService.findTeacherByEmail(teacher.getEmail());
-            System.out.println("Already created. Cannot pre-initialize teacher with email : " + searchTeacher.getEmail());
+            Teacher teacherResult = teacherService.findTeacherByEmail(teacher.getEmail());
+            System.out.printf("Teacher (email=%s) already exists. Cannot create duplicate teacher!%n", teacherResult.getEmail());
         } catch (TeacherNotFoundException e) {
             teacherService.createTeacher(teacher);
         }
     }
-
-     */
 }

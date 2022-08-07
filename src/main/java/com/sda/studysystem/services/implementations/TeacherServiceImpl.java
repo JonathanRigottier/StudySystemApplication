@@ -28,12 +28,11 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherRepository teacherRepository;
 
     @Override
-    public void createTeacher(Teacher teacher) throws TeacherNotFoundException {
-        if(findTeacherByEmail(teacher.getEmail()) == null) {
+    public void createTeacher(Teacher teacher) {
             teacher.setActive(true);
             teacherRepository.save(teacher);
-        }
     }
+
 
     @Override
     public Teacher findTeacherById(UUID id) throws TeacherNotFoundException {

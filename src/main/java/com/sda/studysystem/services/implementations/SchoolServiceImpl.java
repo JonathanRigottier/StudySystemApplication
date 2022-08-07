@@ -1,6 +1,5 @@
 package com.sda.studysystem.services.implementations;
 
-import com.sda.studysystem.exceptions.SchoolAlreadyExistsException;
 import com.sda.studysystem.exceptions.SchoolNotFoundException;
 import com.sda.studysystem.models.School;
 import com.sda.studysystem.repositories.SchoolRepository;
@@ -25,14 +24,9 @@ public class SchoolServiceImpl implements SchoolService {
     private SchoolRepository schoolRepository;
 
     @Override
-    public void createSchool(School school) throws SchoolAlreadyExistsException {
-        try {
-            School resultSchool = findSchoolByName(school.getName());
-            throw new SchoolAlreadyExistsException(resultSchool.getName());
-        } catch (SchoolNotFoundException e) {
-            school.setActive(true);
-            schoolRepository.save(school);
-        }
+    public void createSchool(School school) {
+        school.setActive(true);
+        schoolRepository.save(school);
     }
 
     @Override

@@ -1,11 +1,13 @@
 package com.sda.studysystem.models;
 
+import com.sda.studysystem.utils.constraints.ValidTeacher;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.UUID;
  */
 @Data
 @Entity
+@ValidTeacher
 @EqualsAndHashCode(callSuper = true)
 public class Teacher extends Auditable<String> implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -32,6 +35,7 @@ public class Teacher extends Auditable<String> implements Serializable {
     private String firstName;
     private String lastName;
     private String address;
+    @NotBlank(message = "{messages.constraints.blank-teacher-email}")
     private String email;
     private String phone;
 

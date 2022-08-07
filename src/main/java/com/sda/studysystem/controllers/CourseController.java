@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -46,88 +47,27 @@ public class CourseController {
             return new ResponseEntity<>(course, headers, HttpStatus.OK);
         }
 
-    @GetMapping("/create")
-    public String showCreateCoursePage(@ModelAttribute("course") Course course,
-                                       @ModelAttribute("message") String message,
-                                       @ModelAttribute("messageType") String messageType){
-        return "course/create-course";
-    }
-
     @PostMapping
-    public String createCourse(Course course, RedirectAttributes redirectAttributes) {
-        try {
-            Course searchCourse = courseService.findCourseByName(course.getName());
-            redirectAttributes.addFlashAttribute("message",
-                    String.format("Course(%s) already exists!", searchCourse.getName()));
-            redirectAttributes.addFlashAttribute("messageType","error");
-            return "redirect:/course/create";
-        } catch (CourseNotFoundException e) {
+    public ResponseEntity<?> createCourse(@Valid @RequestBody Course course) {
             courseService.createCourse(course);
-            redirectAttributes.addFlashAttribute("message",
-                    String.format("Course(%s) created successfully!", course.getName()));
-            redirectAttributes.addFlashAttribute("messageType","success");
-            return "redirect:/course";
-        }
+            return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/update/{id}")
-    public String showUpdateCoursePage(@PathVariable UUID id, Model model, RedirectAttributes redirectAttributes,
-                                       @RequestParam(value="course", required = false) Course course) {
-        if (course == null) {
-            try {
-                model.addAttribute("course", courseService.findCourseById(id));
-            } catch (CourseNotFoundException e) {
-                return handleCourseNotFoundExceptionById(id, redirectAttributes);
-            }
-        }
-        return "course/update-course";
-    }
-    @PostMapping("/update")
-    public String updateCourse(Course course, RedirectAttributes redirectAttributes) {
-        try {
-            courseService.updateCourse(course);
-            redirectAttributes.addFlashAttribute("message",
-                    String.format("Course(id=%s) created successfully!", course.getId()));
-            redirectAttributes.addFlashAttribute("messageType","success");
-            return "redirect:/course";
-        } catch (CourseNotFoundException e) {
-            return handleCourseNotFoundExceptionById(course.getId(), redirectAttributes);
-        }
+   @PostMapping("/update")
+    public ResponseEntity<?> updateCourse(@Valid @RequestBody Course course) throws CourseNotFoundException {
+           courseService.updateCourse(course);
+          return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteCourse(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
-        try {
+    public ResponseEntity<?> deleteCourse(@PathVariable UUID id) throws CourseNotFoundException {
             courseService.deleteCourseById(id);
-            redirectAttributes.addFlashAttribute("message",
-                    String.format("Course(id=%s) deleted successfully!", id));
-            redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/course";
-
-        } catch (CourseNotFoundException e) {
-            return handleCourseNotFoundExceptionById(id, redirectAttributes);
-        }
+            return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/restore/{id}")
-    public String restoreCourse (@PathVariable UUID id, RedirectAttributes redirectAttributes) {
-        try {
+    public ResponseEntity<?> restoreCourse (@PathVariable UUID id) throws CourseNotFoundException {
             courseService.restoreCourseById(id);
-            redirectAttributes.addFlashAttribute("message",
-                    String.format("Course(id=%s) restored successfully!", id));
-            redirectAttributes.addFlashAttribute("messageType", "success");
-            return "redirect:/course";
-
-        } catch (CourseNotFoundException e) {
-            return handleCourseNotFoundExceptionById(id, redirectAttributes);
-        }
-    }
-
-    // PRIVATE METHODS //
-    private String handleCourseNotFoundExceptionById(UUID id, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("message",
-                String.format("Course(id=%s) not found!", id));
-        redirectAttributes.addFlashAttribute("messageType", "error");
-        return "redirect:/course";
+            return new ResponseEntity<>(HttpStatus.OK);
     }
 }
