@@ -54,7 +54,7 @@ public class TeacherController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<?> updateTeacher(@Valid @RequestBody Teacher teacher) throws TeacherNotFoundException {
+    public ResponseEntity<?> updateTeacher(@RequestBody Teacher teacher) throws TeacherNotFoundException {
             teacherService.updateTeacher(teacher);
             return new ResponseEntity<>(HttpStatus.OK);
     }

@@ -1,5 +1,6 @@
 package com.sda.studysystem.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sda.studysystem.utils.constraints.ValidSchool;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,5 +37,7 @@ public class School extends Auditable<String> implements Serializable {
     private String city;
 
     private String phone;
+
+    @JsonProperty("isActive")
     private boolean isActive;
 }

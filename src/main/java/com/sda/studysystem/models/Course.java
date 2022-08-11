@@ -1,5 +1,6 @@
 package com.sda.studysystem.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sda.studysystem.utils.constraints.ValidCourse;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -33,5 +34,7 @@ public class Course extends Auditable<String> implements Serializable {
     @NotBlank(message = "{messages.constraints.blank-course-name}")
     private String name;
     private Double durationHours;
+
+    @JsonProperty("isActive")
     private boolean isActive;
 }

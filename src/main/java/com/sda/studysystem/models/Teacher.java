@@ -1,5 +1,6 @@
 package com.sda.studysystem.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sda.studysystem.utils.constraints.ValidTeacher;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -45,6 +46,7 @@ public class Teacher extends Auditable<String> implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Course> courses;
 
+    @JsonProperty("isActive")
     private boolean isActive;
 
     private LocalDate joinDate;

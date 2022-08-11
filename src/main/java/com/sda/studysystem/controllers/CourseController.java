@@ -54,7 +54,7 @@ public class CourseController {
     }
 
    @PostMapping("/update")
-    public ResponseEntity<?> updateCourse(@Valid @RequestBody Course course) throws CourseNotFoundException {
+    public ResponseEntity<?> updateCourse(@RequestBody Course course) throws CourseNotFoundException {
            courseService.updateCourse(course);
           return new ResponseEntity<>(HttpStatus.OK);
     }

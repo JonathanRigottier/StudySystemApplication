@@ -49,7 +49,7 @@ public class SchoolController {
 
 
     @PostMapping("/update")
-    public ResponseEntity<?> updateSchool(@Valid @RequestBody School school) throws SchoolNotFoundException {
+    public ResponseEntity<?> updateSchool(@RequestBody School school) throws SchoolNotFoundException {
         schoolService.updateSchool(school);
         return new ResponseEntity<>(HttpStatus.OK);
     }
