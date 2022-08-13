@@ -2,8 +2,10 @@ package com.sda.studysystem.services.implementations;
 
 import com.sda.studysystem.exceptions.TeacherNotFoundException;
 import com.sda.studysystem.models.Teacher;
+import com.sda.studysystem.models.User;
 import com.sda.studysystem.repositories.TeacherRepository;
 import com.sda.studysystem.services.TeacherService;
+import com.sda.studysystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -80,4 +82,5 @@ public class TeacherServiceImpl implements TeacherService {
         teacher.setActive(true);
         teacherRepository.saveAndFlush(teacher);
     }
+
 }
