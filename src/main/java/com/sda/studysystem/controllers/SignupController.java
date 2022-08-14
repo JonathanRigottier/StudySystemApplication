@@ -27,24 +27,22 @@ public class SignupController {
     @Autowired
     private AuthorityService authorityService;
 
+
     @GetMapping
-    public String showSignUpPage(@ModelAttribute("user") User user,
-                                @ModelAttribute("message") String message,
-                                @ModelAttribute("messageType") String messageType, Model model) {
+    public String showSignupPage(@ModelAttribute("user") User user, @ModelAttribute("message") String message,
+                                 @ModelAttribute("messageType") String messageType, Model model) {
         model.addAttribute("authorities", authorityService.findAllAuthorities());
         return "auth/signup";
     }
 
-
     @PostMapping
     public String postSignup(User user, RedirectAttributes redirectAttributes) {
-
         try {
             userService.findUserByUserName(user.getUserName());
             redirectAttributes.addFlashAttribute("message", "User already exists!");
             redirectAttributes.addFlashAttribute("messageType", "error");
             return "redirect:/signup";
-        } catch (UserNotFoundException userNotFoundException) {
+        } catch(UserNotFoundException userNotFoundException) {
             userService.createUser(user);
             redirectAttributes.addFlashAttribute("message", "Signup successful!");
             redirectAttributes.addFlashAttribute("messageType", "success");

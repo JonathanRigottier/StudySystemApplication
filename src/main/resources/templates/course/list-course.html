@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>List course</title>
@@ -18,12 +18,7 @@
                 <h1 class="display-5 fw-bold">Course list</h1>
                 <a class="btn btn-success" href="/course/create" role="button">Add course</a>
                 <p></p>
-                <div class="alert alert-success" role="alert" th:if="${messageType} == 'success'">
-                    <span th:text="${message}"></span>
-                </div>
-                <div class="alert alert-danger" role="alert" th:if="${messageType} == 'error'">
-                    <span th:text="${message}"></span>
-                </div>
+                <div th:replace="fragments/alert-box"></div>
                 <div class="alert alert-info" role="alert" th:if="${courses.size() == 0}">
                     <span>No courses found!</span>
                 </div>

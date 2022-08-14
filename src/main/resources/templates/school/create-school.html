@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Create school</title>
@@ -13,9 +13,7 @@
         <div class="p-5 mb-4 bg-light rounded-3">
             <div class="container-fluid py-5">
                 <h1 class="display-5 fw-bold">Create school</h1>
-                <div class="alert alert-danger" role="alert" th:if="${messageType} == 'error'">
-                    <span th:text="${message}"></span>
-                </div>
+                <div th:replace="fragments/alert-box"></div>
 
                 <form action="#" method="post" th:action="@{/school}" th:object="${school}">
                     <div class="form-group mb-3">
