@@ -5,7 +5,9 @@ import com.sda.studysystem.models.Authority;
 import com.sda.studysystem.repositories.AuthorityRepository;
 import com.sda.studysystem.services.AuthorityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,12 +16,16 @@ import java.util.Optional;
  *
  * @author Vinod John
  */
+
+@Service
+@Transactional
 public class AuthorityServiceImpl implements AuthorityService {
     @Autowired
     private AuthorityRepository authorityRepository;
 
     @Override
     public void createAuthority(Authority authority) {
+        authority.setActive(true);
         authorityRepository.save(authority);
     }
 
