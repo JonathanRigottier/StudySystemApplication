@@ -30,7 +30,8 @@ public class SchoolController {
     }
 
     @GetMapping("/{id}")
-    public String showSchoolViewPage(@PathVariable UUID id, Model model, RedirectAttributes redirectAttributes) {
+    public String showSchoolViewPage(@PathVariable UUID id, Model model,
+                                     RedirectAttributes redirectAttributes) {
         try {
             model.addAttribute("school", schoolService.findSchoolById(id));
             return "school/view-school";
